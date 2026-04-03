@@ -122,6 +122,10 @@ public class BotForumHelper extends BaseController {
 
         if (messages.size() > 0) {
             final BotDraftMessage draftMessage = messages.valueAt(0);
+            if (draftMessage.selfDestruct != null) {
+                AndroidUtilities.cancelRunOnUIThread(draftMessage.selfDestruct);
+            }
+            botTextDraftsByRandomIds.remove(userId, topicId, draftMessage.randomId);
             FileLog.d("[BotForum] onDraftNewMessage " + userId + " " + topicId);
             return draftMessage.messageObject;
         }
